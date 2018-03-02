@@ -1,6 +1,7 @@
 package algorithm.EMA;
 
 import algorithm.signal.Trend;
+import model.EMAUnit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,21 +57,4 @@ public class EMA {
         return this.emaLine.subList(this.emaLine.size() - n, this.emaLine.size() -1 );
     }
 
-    public class EMAUnit{
-        private Double score;
-        private Trend trend;
-
-        public EMAUnit(double score, Trend trend){
-            this.score = score;
-            this.trend = trend;
-        }
-
-        public Double getScore(){
-            return this.score;
-        }
-
-        public Trend getTrend(){
-            return this.trend;
-        }
-    }
 }

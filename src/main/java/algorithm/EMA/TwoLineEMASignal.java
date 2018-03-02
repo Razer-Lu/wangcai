@@ -2,6 +2,7 @@ package algorithm.EMA;
 
 import algorithm.signal.Decision;
 import algorithm.signal.Signal;
+import model.EMAUnit;
 
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class TwoLineEMASignal extends Signal {
             return;
         }
 
-        List<EMA.EMAUnit> shortNDays = shortEMA.getLastNEMA(CROSS_WAIT_WINDOW);
-        List<EMA.EMAUnit> longNDays = longEMA.getLastNEMA(CROSS_WAIT_WINDOW);
+        List<EMAUnit> shortNDays = shortEMA.getLastNEMA(CROSS_WAIT_WINDOW);
+        List<EMAUnit> longNDays = longEMA.getLastNEMA(CROSS_WAIT_WINDOW);
 
         boolean strongBuySignal = true;
         boolean strongSellSignal = true;
@@ -45,8 +46,8 @@ public class TwoLineEMASignal extends Signal {
         }
 
         for (int i = 0; i < CROSS_WAIT_WINDOW; i++) {
-            EMA.EMAUnit shortCur = shortNDays.get(i);
-            EMA.EMAUnit longCur = longNDays.get(i);
+            EMAUnit shortCur = shortNDays.get(i);
+            EMAUnit longCur = longNDays.get(i);
 
             strongBuySignal &= checkStrongBuySignal(shortCur, longCur, i);
             strongSellSignal &= checkStrongSellSignal(shortCur, longCur, i);
@@ -68,23 +69,23 @@ public class TwoLineEMASignal extends Signal {
 
     }
 
-    private boolean checkStrongBuySignal(EMA.EMAUnit shortCur, EMA.EMAUnit longCur, int idx) {
+    private boolean checkStrongBuySignal(EMAUnit shortCur, EMAUnit longCur, int idx) {
         if (idx == 0) return shortCur.getScore() == longCur.getScore();
 
         return shortCur.getScore() > longCur.getScore();
     }
 
-    private boolean checkStrongSellSignal(EMA.EMAUnit shortCur, EMA.EMAUnit longCur, int idx) {
+    private boolean checkStrongSellSignal(EMAUnit shortCur, EMAUnit longCur, int idx) {
         if (idx == 0) return shortCur.getScore() == longCur.getScore();
 
         return shortCur.getScore() < longCur.getScore();
     }
 
-    private boolean checkKeepSignal(EMA.EMAUnit shortCur, EMA.EMAUnit longCur) {
+    private boolean checkKeepSignal(EMAUnit shortCur, EMAUnit longCur) {
         return shortCur.getScore() > longCur.getScore();
     }
 
-    private boolean checkNotBuySignal(EMA.EMAUnit shortCur, EMA.EMAUnit longCur) {
+    private boolean checkNotBuySignal(EMAUnit shortCur, EMAUnit longCur) {
         return shortCur.getScore() < longCur.getScore();
     }
 
